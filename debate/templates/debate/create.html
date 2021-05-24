@@ -1,0 +1,28 @@
+{% extends 'debate/layout.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+        <h1 class="display-4">Online Debates</h1>
+        <p class="lead">
+            Looking to win some arguments? Login, find a motion and just debate!
+            <div class="create">
+                <a href="{% url 'debate-create' %}">
+                  <button type="button" class="btn btn-outline-success">Create Motion</button>
+                </a>
+            </div>
+        </p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button class="btn btn-primary" type="submit">Create Motion</button>
+        </form>
+    </div>
+
+    
+
+{% endblock %}

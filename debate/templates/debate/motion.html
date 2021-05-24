@@ -1,0 +1,66 @@
+{% extends 'debate/layout.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="back" style="margin-top: 0; margin-bottom: 10px;">
+                <a href="{% url 'debate-index' %}" class="btn btn-outline-warning">Back to Home</a>
+            </div>
+        <h1 class="display-4">{{motion.title}}</h1>
+        <p class="lead">
+            {% if motion.context != '' %}
+                {{motion.context}}
+            {% endif %}
+        </p>
+        </div>
+    </div>
+
+
+    <div class="container">
+        
+        <div class="alert alert-success" role="alert" style="margin:10px 0;">
+            <h4 class="alert-heading">Let's debate better!</h4>
+            <p class="mb-0">
+                Please read all the arguments before making a new one!
+            </p>
+          </div>
+
+        <div class="card" id="add-arg" style="margin-bottom: 20px;">
+            <div class="card-header">
+              Add an argument
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'debate-argument' motion.id %}">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <button type="submit" class="btn btn-primary">Add Argument</button>
+                </form>
+              
+            </div>
+          </div>
+
+        {% for arg in arguments %}
+                <div class="card argument">
+                <div class="card-header">
+                  {{ arg.side }}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{arg.title}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">@{{ arg.owner.username }}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ arg.date_posted }}</h6>
+                  <p class="card-text">
+                    {{ arg.content }}    
+                  </p>
+                  <a href="{% url 'debate-spec-arg' arg.id %}" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              {% empty %}
+                No arguments made.
+
+        {% endfor %}
+    </div>
+    
+       
+
+{% endblock %}

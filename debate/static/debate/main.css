@@ -1,0 +1,30 @@
+.jumbotron{
+    margin-top: 0;
+}
+
+.motion{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.jumbotron{
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.argument{
+    margin-bottom: 20px;
+}
+
+.alert{
+    margin-bottom: 0;
+}
+
+.better{
+    margin-bottom: 10px;
+}
+
+#add-arg{
+    margin-top: 20px;
+}
+

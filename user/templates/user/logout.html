@@ -1,0 +1,18 @@
+{% extends 'debate/layout.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+        <h1 class="display-4">Going Away So Soon?</h1>
+        <p class="lead">
+            Debate motions await you! Login right away and continue debating!
+            <div class="login">
+                <a href="{% url 'user-login' %}" class = "logout"><button class="btn btn-primary">Login Again</button></a>
+            </div>
+            
+        </p>
+        </div>
+    </div>
+
+{% endblock %}

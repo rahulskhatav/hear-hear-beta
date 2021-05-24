@@ -1,0 +1,62 @@
+{% extends 'debate/layout.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="back" style="margin-top: 0; margin-bottom: 10px;">
+                <a href="{% url 'debate-motion' argument.to_motion.id %}" class="btn btn-outline-warning">Back to Motion</a>
+            </div>
+        <h1 class="display-4">{{argument.to_motion.title}}</h1>
+        <p class="lead">
+            {{ argument.title }}
+        </p>
+        </div>
+    </div>
+
+
+    <div class="container">
+        
+        <div class="alert alert-success" role="alert" style="margin:10px 0;">
+            <h4 class="alert-heading">Let's debate better!</h4>
+            <p class="mb-0">
+                Please read all the points before making a new one!
+            </p>
+          </div>
+
+        <div class="card" id="add-arg" style="margin-bottom: 20px;">
+            <div class="card-header">
+              Add a point
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'debate-makep' argument.id %}">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <button type="submit" class="btn btn-primary">Add Point</button>
+                </form>
+              
+            </div>
+          </div>
+
+        {% for point in points %}
+                <div class="card argument">
+                <div class="card-header">
+                  {{ point.side }}
+                </div>
+                <div class="card-body">
+                  <h6 class="card-subtitle mb-2 text-muted">@{{ point.owner.username }}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ point.date_posted }}</h6>
+                  <p class="card-text">
+                    {{ point.content }}    
+                  </p>
+                </div>
+              </div>
+
+              {% empty %}
+                No points made.
+
+        {% endfor %}
+    </div>
+    
+       
+
+{% endblock %}

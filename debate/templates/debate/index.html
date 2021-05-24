@@ -1,0 +1,38 @@
+{% extends 'debate/layout.html' %}
+{% block body %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+        <h1 class="display-4">Online Debates</h1>
+        <p class="lead">
+            Looking to win some arguments? Login, find a motion and just debate!
+            <div class="create">
+                <a href="{% url 'debate-create' %}" class="btn btn-outline-success">Create Motion</a>
+            </div>
+        </p>
+        </div>
+    </div>
+    
+
+    <!-- Motions -->
+    <div class="container">
+        {% for motion in motions %}
+            <div class="col-sm-9 motion" style="margin-top: 20px;">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ motion.title }}</h5>
+                  <p class="card-text">
+                    @<em>{{ motion.owner }}</em>
+                    <br><b>Date:</b> {{ motion.date_posted }}
+                    <br><b>Difficulty:</b> {{ motion.difficulty }}
+                  </p>
+                  <a href="{% url 'debate-motion' motion.id %}" class="btn btn-primary">Hear, Hear!</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+    </div>
+    <!-- End of Motions -->
+
+    
+
+{% endblock %}

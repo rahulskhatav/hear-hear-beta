@@ -1,0 +1,20 @@
+{% extends 'debate/layout.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+        <h1 class="display-4">Login</h1>
+        <p class="lead">
+            <!-- Login Form -->
+            <form method="POST">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button class="btn btn-primary" type="submit">Sign In</button>
+            </form>
+            <!-- End of Login Form -->
+        </p>
+        </div>
+    </div>
+
+{% endblock %}
