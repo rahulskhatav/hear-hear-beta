@@ -1,8 +1,8 @@
 from django.db.models import fields
 from . models import motion, argument, subpoint
 from django import forms
-
 from debate import models
+from blog.models import BArticle
 
 
 class motionCreate(forms.ModelForm):
@@ -19,3 +19,8 @@ class subpointCreate(forms.ModelForm):
     class Meta:
         model = subpoint
         fields = ['side', 'content',]
+
+class blogCreate(forms.ModelForm):
+    class Meta:
+        model = BArticle
+        fields = ['title', 'caption', 'content']

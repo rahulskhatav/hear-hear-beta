@@ -12,12 +12,25 @@
     </div>
     
     <div class="container">
-
+        <center>
+            <div style="margin-bottom: 20px;">
+                <div>
+                  <img src="{{ user.profile.image.url }}" height="100px" width="100px" class="rounded-circle">
+                </div>
+                <em>@{{ user.username }}</em>
+                <br>
+                {{ user.first_name }} {{ user.last_name }}
+                <br>
+                {{ user.email }}
+                <br>
+                Contributions : {{ user.profile.contributions }}
+            </div>
+        </center>
 
         <!-- Edit Profile -->
         <div class="card">
             <div class="card-body">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form | crispy }}
                     <button class="btn btn-outline btn-success" type="submit">Update</button>

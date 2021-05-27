@@ -10,7 +10,7 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created successfully for {{ username }}')
+            messages.success(request, f'Account created successfully for {username}')
             return redirect('user-login')
         else:
             messages.warning(request, f'Please fill in correct details.')
@@ -22,11 +22,12 @@ def register(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            messages.success("Profile changed successfully")
-    form = ProfileUpdateForm()
+            messages.success(request, "Profile changed successfully")
+            return redirect('user-profile')
+    form = ProfileUpdateForm(instance=request.user.profile)
     context = {
         "form": form,
     }

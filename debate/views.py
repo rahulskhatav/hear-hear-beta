@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from . forms import motionCreate, argumentCreate, subpointCreate
 from django.contrib.auth.decorators import login_required
+from user.models import Profile
 
 # Create your views here.
 def index(request):
@@ -23,6 +24,9 @@ def create(request):
             c = form.cleaned_data['context']
             d = form.cleaned_data['difficulty']
             motion.objects.create(title=t, context=c, difficulty=d, owner=request.user)
+            prof = Profile.objects.get(user=request.user)
+            prof.contributions = prof.contributions+0.5
+            prof.save()
             return HttpResponseRedirect(reverse('debate-index'))
     form = motionCreate()
     context = {
@@ -51,6 +55,9 @@ def make_arg(request, motion_id):
             c = form.cleaned_data['content']
             m = motion.objects.get(pk=motion_id)
             argument.objects.create(side=s, title=t, content=c, to_motion=m, owner=request.user)
+            prof = Profile.objects.get(user=request.user)
+            prof.contributions = prof.contributions+1
+            prof.save()
             messages.warning(request, "Argument added succesfully.")
         else:
             messages.warning(request, "Please make a valid argument.")
@@ -76,7 +83,13 @@ def make_point(request, arg_id):
             c = form.cleaned_data['content']
             a = argument.objects.get(pk=arg_id)
             subpoint.objects.create(side=s, content=c, to_arg=a, owner=request.user)
+            prof = Profile.objects.get(user=request.user)
+            prof.contributions = prof.contributions+0.5
+            prof.save()
             messages.warning(request, "Point added succesfully.")
         else:
             messages.warning(request, "Please make a valid point.")
     return HttpResponseRedirect(reverse('debate-spec-arg', args=(arg_id,)))
+
+def help(request):
+    return render(request, 'debate/help.html')

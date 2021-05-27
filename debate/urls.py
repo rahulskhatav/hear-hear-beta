@@ -1,5 +1,6 @@
 from . import views
 from user import views as user_views
+from blog import views as blog_views
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -13,9 +14,13 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='user/logout.html'), name='user-logout'),
     path('create/', views.create, name='debate-create'),
     path('motion/<int:motion_id>/', views.spec_motion, name='debate-motion'),
-    path('argument/<int:motion_id>', views.make_arg, name='debate-argument'),
-    path('arg/<int:arg_id>', views.spec_argument, name='debate-spec-arg'),
-    path('point/<int:arg_id>', views.make_point, name='debate-makep'),
+    path('argument/<int:motion_id>/', views.make_arg, name='debate-argument'),
+    path('arg/<int:arg_id>/', views.spec_argument, name='debate-spec-arg'),
+    path('point/<int:arg_id>/', views.make_point, name='debate-makep'),
+    path('blog/', blog_views.index, name="blog-home"),
+    path('blog/<int:blog_id>/', blog_views.spec, name="blog-spec"),
+    path('blog/create/', blog_views.create, name="blog-create"),
+    path('help/', views.help, name="debate-help"),
 ]
 
 if settings.DEBUG:

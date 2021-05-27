@@ -13,7 +13,7 @@ class motion(models.Model):
     )
     title = models.CharField(max_length=500)
     context = models.TextField(blank=True)
-    date_posted = models.DateField(default=timezone.now)
+    date_posted = models.DateTimeField(default=timezone.now)
     difficulty = models.CharField(max_length=2, choices=levels)
     owner = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
@@ -28,7 +28,7 @@ class argument(models.Model):
     side = models.CharField(max_length=4, choices=sides)
     title = models.CharField(max_length=100, blank=False)
     content = models.TextField()
-    date_posted = models.DateField(default=timezone.now)
+    date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     to_motion = models.ForeignKey(motion, on_delete=models.CASCADE)
 
@@ -39,7 +39,7 @@ class subpoint(models.Model):
     )
     side = models.CharField(max_length=4, choices=sides)
     content = models.TextField()
-    date_posted = models.DateField(default=timezone.now)
+    date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     to_arg = models.ForeignKey(argument, on_delete=models.CASCADE)
 
